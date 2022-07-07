@@ -49,32 +49,30 @@ func (b *box) GetByIndex(i int) (Shape, error) {
 // ExtractByIndex allows getting shape by index and removes this shape from the list.
 // whether shape by index doesn't exist or index went out of the range, then it returns an error
 func (b *box) ExtractByIndex(i int) (Shape, error) {
-	shapes := b.shapes
-	if len(shapes) <= i {
+	if len(b.shapes) <= i {
 		return nil, errorIndexOutOfRange
 	}
-	s := shapes[i]
+	s := b.shapes[i]
 	if s == nil {
 		return nil, errorShapeByIndexNotExist
 	}
-	shapes = append(shapes[:i], shapes[i+1:]...)
+	b.shapes = append(b.shapes[:i], b.shapes[i+1:]...)
 	return s, nil
 }
 
 // ReplaceByIndex allows replacing shape by index and returns removed shape.
 // whether shape by index doesn't exist or index went out of the range, then it returns an error
 func (b *box) ReplaceByIndex(i int, shape Shape) (Shape, error) {
-	shapes := b.shapes
-	if len(shapes) <= i {
+
+	if len(b.shapes) <= i {
 		return nil, errorIndexOutOfRange
 	}
-	s := shapes[i]
+	s := b.shapes[i]
 	if s == nil {
 		return nil, errorShapeByIndexNotExist
 	}
-	shapes[i] = shape
+	b.shapes[i] = shape
 	return s, nil
-
 }
 
 // SumPerimeter provides sum perimeter of all shapes in the list.
